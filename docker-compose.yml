@@ -1,0 +1,35 @@
+version: '3'
+services:
+    proxysql1:
+        image: "proxysql/proxysql:2.0.7"
+        ports:
+            - "26132:6032"
+            - "26133:6033"
+        volumes:
+          - ./proxysql1/data:/var/lib/proxysql
+          - ./proxysql1/proxysql.cnf:/etc/proxysql.cnf
+        depends_on:
+            - mysql1
+    proxysql2:
+        image: "proxysql/proxysql:2.0.7"
+        ports:
+            - "26232:6032"
+            - "26233:6033"
+        volumes:
+            - ./proxysql2/data:/var/lib/proxysql
+            - ./proxysql2/proxysql.cnf:/etc/proxysql.cnf
+        depends_on:
+            - mysql1
+    mysql1:
+        image: "mysql:5.5"
+        environment:
+            MYSQL_ROOT_PASSWORD: 'rootpass'
+            MYSQL_USER: 'user1'
+            MYSQL_PASSWORD: 'pass1'
+        ports:
+            - "23306:3306"
+        volumes:
+            - ./mysql/data:/var/lib/mysql
+            - ./mysql/config:/etc/mysql/conf.d
+networks:
+    proxysql-net:
