@@ -34,7 +34,7 @@ Create the DB and grant user1 to the test1 db
 ```SQL
 CREATE DATABASE test1;
 GRANT ALL ON test1.* to user1@'%';
-CREATE TABLE `t1` (
+CREATE TABLE `test1`.`t1` (
   `i` int(11) DEFAULT NULL,
   `v` varchar(32) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -67,10 +67,8 @@ SELECT * FROM t1;
 ## Check autocommit variables
 
 ```bash
-proxysql1_admin -e "SELECT * FROM global_variables WHERE variable_name like '%autocommit%';"
 proxysql1_admin -e "SELECT * FROM runtime_global_variables WHERE variable_name like '%autocommit%';"
 
-proxysql2_admin -e "SELECT * FROM global_variables WHERE variable_name like '%autocommit%';"
 proxysql2_admin -e "SELECT * FROM runtime_global_variables WHERE variable_name like '%autocommit%';"
 ```
 
